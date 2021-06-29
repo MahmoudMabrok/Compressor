@@ -36,13 +36,16 @@ fun loadBitmap(imageFile: File) = BitmapFactory.decodeFile(imageFile.absolutePat
 
 fun decodeSampledBitmapFromFile(imageFile: File, reqWidth: Int, reqHeight: Int): Bitmap {
     return BitmapFactory.Options().run {
-       // inJustDecodeBounds = true
+        // inJustDecodeBounds = true
         // BitmapFactory.decodeFile(imageFile.absolutePath, this)
 
         inSampleSize = calculateInSampleSize(this, reqWidth, reqHeight)
-
         inJustDecodeBounds = false
-        BitmapFactory.decodeFile(imageFile.absolutePath, this)
+        var bitmap: Bitmap? = null
+        while (bitmap == null) {
+            bitmap = BitmapFactory.decodeFile(imageFile.absolutePath, this)
+        }
+        bitmap
     }
 }
 
